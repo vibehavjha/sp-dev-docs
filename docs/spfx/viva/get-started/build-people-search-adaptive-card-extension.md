@@ -39,25 +39,7 @@ When prompted, enter the following values (select the default option for all que
 
 At this point, Yeoman installs the required dependencies and scaffolds the solution files. This process might take few minutes.
 
-## Update your project's hosted workbench URL
-
-When you use the gulp task **serve**, by default it opens a browser with the specified hosted workbench URL specified in your project. The default URL for the hosted workbench in a new project points to an invalid URL.
-
-- Locate and open the file **./config/serve.json** in your project
-- Locate the property `initialPage`
-
-    ```json
-    {
-      "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
-      "port": 4321,
-      "https": true,
-      "initialPage": "https://{tenantDomain}/ _layouts/workbench.aspx"
-    }
-    ```
-
-- Change the `{tenantDomain}` domain to the URL of your SharePoint tenant and site you want to use for testing. For example: `https://contoso.sharepoint.com/sites/devsite/_layouts/workbench.aspx`.
-
-At this point, if you do **gulp serve**, then you see the **People Search** card:
+Next, run **gulp serve** from the command line in the root of the project. Once the hosted workbench loads, you'll see the **People Search** card:
 
 ![See the People Search card icon in the workbench toolbox](../../../../docs/images/viva-extensibility/people-search/toolbox.png)
 
@@ -80,7 +62,7 @@ If you switch to Preview mode of the workbench, you can engage with it:
 ### Explore the Card View
 
 - Locate and open the following file in your project: **./src/adaptiveCardExtensions/peopleSearch/cardView/CardView.ts**.
-- The card view implements `BaseComponentsCardView` class and implements `cardViewParameters` getter to specify the card configuration
+- The Card View implements `BaseComponentsCardView` class and implements `cardViewParameters` getter to specify the card configuration
 
 ```typescript
 export class CardView extends BaseComponentsCardView<IPeopleSearchAdaptiveCardExtensionProps, IPeopleSearchAdaptiveCardExtensionState, ISearchCardViewParameters> {
@@ -129,9 +111,9 @@ export class CardView extends BaseComponentsCardView<IPeopleSearchAdaptiveCardEx
 }
 ```
 
-The **body** section of the card view specifies the search box. The search button is configured to open the Quick View with the ID `SEARCH_RESULTS_QUICK_VIEW_REGISTRY_ID`.
+The **body** section of the Card View specifies the search box. The search button is configured to open the Quick View with the ID `SEARCH_RESULTS_QUICK_VIEW_REGISTRY_ID`.
 
-The **footer** section of the card view specifies the suggested item. The suggested item is configured to open the Quick View with the ID `ITEM_QUICK_VIEW_REGISTRY_ID`.
+The **footer** section of the Card View specifies the suggested item. The suggested item is configured to open the Quick View with the ID `ITEM_QUICK_VIEW_REGISTRY_ID`.
 
 ### Explore the Quick Views
 
@@ -164,7 +146,7 @@ public onBeforeAction(action: IOnBeforeActionArguments): void {
   if (action.type === 'QuickView') {
     //
     // for the QuickView action we can get search query from the data property.
-    // it allows to display the same query string in the quick view's text input.
+    // it allows to display the same query string in the Quick View's text input.
     //
     const quickViewActionArguments: IQuickViewActionArguments = action as IQuickViewActionArguments;
     if (quickViewActionArguments.viewId === SEARCH_RESULTS_QUICK_VIEW_REGISTRY_ID) {
@@ -759,7 +741,7 @@ The next step is to open the Person card (`ItemQuickView`) when selecting a sear
           });
           break;
         case 'selectPerson': {
-          // set selected person and open the item quick view
+          // set selected person and open the item Quick View
           const person: IPerson = this.state.results.filter(p => p.id === data.personId)[0];
           this.setState({
             selectedPerson: person
@@ -961,11 +943,11 @@ The next step is to open the Person card (`ItemQuickView`) when selecting a sear
       }
     ```
 
-Now if you select on a person in the list, you should see a quick view of the person's details:
+Now if you select on a person in the list, you should see a Quick View of the person's details:
 
 ![Person card](../../../../docs/images/viva-extensibility/people-search/qv-person.png)
 
-## Display Suggested person in the card view
+## Display Suggested person in the Card View
 
 - Locate and open **./src/adaptiveCards/peopleSearch/cardView/CardView.ts**
 - Update `cardViewParameters` getter to use `suggested` value from the state as follows
@@ -1021,6 +1003,6 @@ Now if you select on a person in the list, you should see a quick view of the pe
     });
     ```
 
-Now you see the current user in the Suggested section of the card view. If you select on the user information, you see the quick view of the person's details.
+Now you see the current user in the Suggested section of the Card View. If you select on the user information, you see the Quick View of the person's details.
 
 ![Suggested card](../../../../docs/images/viva-extensibility/people-search/qv-suggested.png)

@@ -1,7 +1,7 @@
 ---
 title: Limits and Calling Patterns
-description: This article explains the limits of SharePoint Embedded
-ms.date: 11/28/2023
+description: This article explains the limits of SharePoint Embedded.
+ms.date: 11/16/2024
 ms.localizationpriority: high
 ---
 
@@ -20,8 +20,8 @@ The following table defines the size limits of containers"
 | --------------------------------------------------------- | ------------------------------------------------------ |
 | Container types that a partner tenant can create          | 5*                                                     |
 | Container types that an app can own                       | 1                                                      |
-| Containers of a container type per tenant                 | 100k*                                                  |
-| Storage per container type per tenant                     | 100 TB*                                                 |
+| Containers of a container type per consuming tenant       | 100k*                                                  |
+| Storage per container type per consuming tenant           | 100 TB*                                                |
 | Files and folders per container                           | 30M                                                    |
 | Storage per container                                     | 25 TB                                                   |
 | Files and folders with additive permissions per container | 5k                                                     |
@@ -30,13 +30,13 @@ The following table defines the size limits of containers"
 | Number of users shared per folder or file                 | 5k                                                     |
 
 > [!NOTE]
-> \* Limit can be increased per request.
+> Limit can be increased per request.
 
 ## Throttling
 
 ### Patterns and best practices
 
-When applications hit service limits, you'll receive an HTTP status code 429 ("Too many requests"). You may also receive an HTTP status code 503 ("Server Too Busy").
+When applications hit service limits, you receive an HTTP status code 429 ("Too many requests"). You might also receive an HTTP status code 503 ("Server Too Busy").
 
 In general, the following are the best practices to handle throttling:
 
@@ -44,7 +44,7 @@ In general, the following are the best practices to handle throttling:
 - Avoid request spikes.
 - Honor the `Retry-After` HTTP header.
 
-In both cases, a `Retry-After` header is included in the response indicating how long the calling application should wait before retrying or making a new request. Throttled requests count towards usage limits, so failure to honor `Retry-After` may result in more throttling.
+In both cases, a `Retry-After` header is included in the response indicating how long the calling application should wait before retrying or making a new request. Throttled requests count towards usage limits, so failure to honor `Retry-After` might result in more throttling.
 
 ## API rate limits
 
@@ -53,7 +53,7 @@ SharePoint Embedded provides various APIs. Different APIs have different costs d
 | Resource units per request |                                 Operations                                 |
 | -------------------------- | -------------------------------------------------------------------------- |
 | 1                          | Single item query, such as get item                                        |
-| 2                          | Multi item query, such as list children  Create, update, delete and upload |
+| 2                          | Multi-item query, such as list children  Create, update, delete, and upload |
 | 5                          | All permission resource operations, including $expand=permissions          |
 
 > [!NOTE]
